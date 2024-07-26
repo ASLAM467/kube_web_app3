@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spc-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spc
+  template:
+    metadata:
+      labels:
+        app: spc
+        env: dev
+    spec:
+      containers:
+        - name: spc
+          image: "${DJANGO_IMAGE}"  # Use environment variable reference
+          resources:
+            limits:
+              cpu: 500m
+              memory: 350Mi
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - mountPath: "/app/data"
+              name: django-storage
+        - name: spc2
+          image: "${DJANGO_IMAGE2}"  # Use environment variable reference
+          ports:
+            - containerPort: 9000
+      volumes:
+        - name: django-storage
+          persistentVolumeClaim:
+            claimName: django-pvc
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
