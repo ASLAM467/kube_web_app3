@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spc-deployment
+  name: spc-deployment2
 spec:
   replicas: 1
   selector:
@@ -14,21 +14,13 @@ spec:
         env: dev
     spec:
       containers:
-        - name: spc
-          image: "${DJANGO_IMAGE}"  # Use environment variable reference
-          resources:
-            limits:
-              cpu: 500m
-              memory: 350Mi
+        - name: spc-container-3
+          image: "${DJANGO_IMAGE3}"  # Use environment variable reference
           ports:
-            - containerPort: 8000
+            - containerPort: 9001
           volumeMounts:
             - mountPath: "/app/data"
               name: django-storage
-        - name: spc2
-          image: "${DJANGO_IMAGE2}"  # Use environment variable reference
-          ports:
-            - containerPort: 9000
       volumes:
         - name: django-storage
           persistentVolumeClaim:
