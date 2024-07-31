@@ -12,21 +12,21 @@ spec:
   rules:
     - http:
         paths:
-          - path: /demo-1
+          - path: /app1
             pathType: Prefix
             backend:
               service:
                 name: spc-svc1
                 port:
                   number: 8000
-          - path: /demo-2
+          - path: /app2
             pathType: Prefix
             backend:
               service:
                 name: spc-svc1
                 port:
                   number: 9000
-          - path: /demo-3
+          - path: /app3
             pathType: Prefix
             backend:
               service:
